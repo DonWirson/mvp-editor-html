@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'dart:html' as html;
 import 'package:prueba_html/bloc/html_page/bloc/html_page_bloc.dart';
 import 'package:prueba_html/services/path_services.dart';
 
@@ -93,15 +92,15 @@ class _HtmlEditState extends State<HtmlEdit> {
                 ],
               ),
             ),
-            // HtmlEditor(
-            //   controller: controller,
-            //   htmlEditorOptions: const HtmlEditorOptions(
-            //     hint: "Ingrese texto: ",
-            //   ),
-            //   otherOptions: const OtherOptions(
-            //     height: 400,
-            //   ),
-            // ),
+            HtmlEditor(
+              controller: controller,
+              htmlEditorOptions: const HtmlEditorOptions(
+                hint: "Ingrese texto: ",
+              ),
+              otherOptions: const OtherOptions(
+                height: 400,
+              ),
+            ),
           ],
         );
       },
@@ -113,13 +112,13 @@ class _HtmlEditState extends State<HtmlEdit> {
     final htmlContent = await controller.getText();
 
     if (kIsWeb) {
-      var blob = html.Blob([htmlContent], 'text/plain', 'native');
+      // var blob = html.Blob([htmlContent], 'text/plain', 'native');
 
-      var anchorElement = html.AnchorElement(
-        href: html.Url.createObjectUrlFromBlob(blob).toString(),
-      )
-        ..setAttribute("download", "${DateTime.now()}.txt")
-        ..click();
+      // var anchorElement = html.AnchorElement(
+      //   href: html.Url.createObjectUrlFromBlob(blob).toString(),
+      // )
+      //   ..setAttribute("download", "${DateTime.now()}.txt")
+      //   ..click();
     } else {
       //Path Provider no soporta web
       BlocProvider.of<HtmlPageBloc>(context)
