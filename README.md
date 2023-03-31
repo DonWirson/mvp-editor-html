@@ -1,3 +1,17 @@
-Estimado candidato, Junto con saludar, enviamos el desafío que debe desarrollar: 
+Proyecto MVP con motivo de editar archivos HTML en móvil y web.
 
-Se necesita un desarrollo en Flutter para crear un componente de edición de HTML que funcione en web y mobile, que permita ingresar texto con formatos (negrita, colores, tamaño, etc), puede utilizar algún package que ya exista, pero debe indicar en la documentación del proyecto porqué lo eligió, cuales son sus problemas y cuales fueron las pruebas realizadas. El componente debe guardar el contenido HTML en un archivo.. Si tienes dudas puedes hacer supuestos y luego documentarlos en el readme.md. La entrega la debes realizar a más tardar el día viernes hasta las 23:50 hrs, en un archivo comprimido debes incluir el proyecto, la documentación y los supuestos que hayas considerado, el archivo comprimido debes enviarlo por correo a la casilla developer.code@huemulsolutions.com# mvp-editor-html
+Aplicación posee 3 vistas las cuales ayudan a generar y revisar Html Generado por el editor.
+
+Vista 1: Editor de HTMl.
+Vista 2: Visor en tiempo real de Html (WIP).
+Vista 3: Solo movil, permite seleccionar un archivo HTML generado y abrirlo.
+
+Packages usados en este proyecto:
+
+-Html_editor_enhanced: Paquete que genera un editor de texto en formato HTML, escogido principalmente porque permite ser usado en movil como web.
+
+-Bloc: para manejar estados al cargar y descargar archivos HTML.
+
+-Path Provider: Permite acceder a archivos de celular (solo carpetas de aplicación o de cache), para guardar archivos y luego mostrarlos, solo en móvil.
+
+-Open_file_plus: Permite generar un diálogo para abrir el archivo HTML generado previamente.
