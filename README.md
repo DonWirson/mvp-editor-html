@@ -1,4 +1,4 @@
-Proyecto MVP con motivo de editar archivos HTML en móvil y web.
+Proyecto Flutter MVP con motivo de editar archivos HTML en móvil y web.
 
 Aplicación posee 3 vistas las cuales ayudan a generar y revisar Html Generado por el editor.
 
