@@ -24,7 +24,10 @@ class HtmlPreview extends StatelessWidget {
           return Html(data: state.htmlContent);
         }
         return const Center(
-          child: Text("¿Por que no empiezas editando el texto?"),
+          child: Text(
+            "¿Por que no empiezas editando el texto? \n Luego dale al botón de HTML en primera vista",
+            textAlign: TextAlign.center,
+          ),
         );
       },
     );
