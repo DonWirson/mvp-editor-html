@@ -9,3 +9,5 @@ class SavedHtmlFile extends HtmlPageEvent {
 }
 
 class LoadedHtmlFiles extends HtmlPageEvent {}
+
+class RequestedHtmlPreview extends HtmlPageEvent {}
