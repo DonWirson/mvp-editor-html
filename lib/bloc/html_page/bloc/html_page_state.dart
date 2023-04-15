@@ -23,3 +23,13 @@ class LoadedPageSavedSuccessfully extends HtmlPageState {
 }
 
 class LoadedPageSavedFailed extends HtmlPageState {}
+
+class HtmlPreviewInProgress extends HtmlPageState {}
+
+class HtmlPreviewSuccessfully extends HtmlPageState {
+  final String? htmlContent;
+
+  HtmlPreviewSuccessfully({required this.htmlContent});
+}
+
+class HtmlPreviewdFailed extends HtmlPageState {}

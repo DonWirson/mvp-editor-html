@@ -109,8 +109,7 @@ class _HtmlEditState extends State<HtmlEdit> {
 
   ///Carga html actual en vista de preview
   void _loadHtmlFile() {
-    //como html se guarda en bloc, hace setstate para actualizar vista de preview
-    setState(() {});
+    BlocProvider.of<HtmlPageBloc>(context).add(RequestedHtmlPreview());
   }
 
   ///Borra contenido de html actual

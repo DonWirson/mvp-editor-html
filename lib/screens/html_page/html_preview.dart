@@ -8,13 +8,25 @@ class HtmlPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var contentHtmlTopreview =
-        BlocProvider.of<HtmlPageBloc>(context).htmlContent;
-    if (contentHtmlTopreview != null) {
-      return Html(
-        data: contentHtmlTopreview,
-      );
-    }
-    return const Center(child: Text("¿Por que no empiezas editando el texto?"));
+    return BlocBuilder<HtmlPageBloc, HtmlPageState>(
+      builder: (context, state) {
+        if (state is HtmlPreviewInProgress) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        if (state is HtmlPreviewSuccessfully) {
+          if (state.htmlContent == null) {
+            return const Center(
+              child: Text("Texto a renderizar esta vacio :C"),
+            );
+          }
+          return Html(data: state.htmlContent);
+        }
+        return const Center(
+          child: Text("¿Por que no empiezas editando el texto?"),
+        );
+      },
+    );
   }
 }

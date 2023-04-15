@@ -12,6 +12,7 @@ class HtmlPageBloc extends Bloc<HtmlPageEvent, HtmlPageState> {
   HtmlPageBloc() : super(HtmlPageInitial()) {
     on<SavedHtmlFile>(_saveHtmlFile);
     on<LoadedHtmlFiles>(_loadHtmlFiles);
+    on<RequestedHtmlPreview>(_renderHtmlPreview);
   }
 
   Future<void> _saveHtmlFile(
@@ -40,6 +41,16 @@ class HtmlPageBloc extends Bloc<HtmlPageEvent, HtmlPageState> {
       emit(LoadedPageSavedSuccessfully(htmlPagesSaved: archivosHtml));
     } catch (e) {
       emit(LoadedPageSavedFailed());
+    }
+  }
+
+  Future<void> _renderHtmlPreview(
+      RequestedHtmlPreview event, Emitter<HtmlPageState> emit) async {
+    emit(HtmlPreviewInProgress());
+    try {
+      emit(HtmlPreviewSuccessfully(htmlContent: htmlContent));
+    } catch (e) {
+      emit(HtmlPreviewdFailed());
     }
   }
 }
