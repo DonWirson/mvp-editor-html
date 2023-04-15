@@ -38,7 +38,7 @@ class _HtmlLoadState extends State<HtmlLoad> {
           }
         }
       },
-      child: archivosHtml.isEmpty || !kIsWeb
+      child: archivosHtml.isEmpty || kIsWeb
           ? const Center(
               child: Text(
                   "Empieza guardando archivos HTML, aparecerán acá, solo para la versión movil"),

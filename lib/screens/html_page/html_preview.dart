@@ -16,12 +16,17 @@ class HtmlPreview extends StatelessWidget {
           );
         }
         if (state is HtmlPreviewSuccessfully) {
-          if (state.htmlContent == null) {
-            return const Center(
-              child: Text("Texto a renderizar esta vacio :C"),
-            );
-          }
-          return Html(data: state.htmlContent);
+          //          ScaffoldMessenger.of(context).showSnackBar(
+          //   const SnackBar(
+          //     content: Text(
+          //       "HTML cargado con éxito, revisa la vista \"Preview2\" ",
+          //     ),
+          //     duration: Duration(seconds: 2),
+          //   ),
+          // );
+          return Html(
+            data: state.htmlContent,
+          );
         }
         return const Center(
           child: Text(
