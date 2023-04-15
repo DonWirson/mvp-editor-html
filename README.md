@@ -3,7 +3,9 @@ Proyecto Flutter MVP con motivo de editar archivos HTML en móvil y web.
 Aplicación posee 3 vistas las cuales ayudan a generar y revisar Html Generado por el editor.
 
 Vista 1: Editor de HTMl.
-Vista 2: Visor en tiempo real de Html (WIP).
+
+Vista 2: Visor on demand de Html.
+
 Vista 3: Solo movil, permite seleccionar un archivo HTML generado y abrirlo.
 
 Packages usados en este proyecto:
