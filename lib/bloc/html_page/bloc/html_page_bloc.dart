@@ -7,6 +7,8 @@ part 'html_page_event.dart';
 part 'html_page_state.dart';
 
 class HtmlPageBloc extends Bloc<HtmlPageEvent, HtmlPageState> {
+  //Mantiene texto actual de archivo html actual
+  String? htmlContent = "";
   HtmlPageBloc() : super(HtmlPageInitial()) {
     on<SavedHtmlFile>(_saveHtmlFile);
     on<LoadedHtmlFiles>(_loadHtmlFiles);

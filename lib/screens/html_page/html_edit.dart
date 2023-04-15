@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:prueba_html/bloc/html_page/bloc/html_page_bloc.dart';
-import 'package:prueba_html/services/path_services.dart';
+import 'package:prueba_html/widgets/custom_elevated_button.dart';
 
 class HtmlEdit extends StatefulWidget {
   const HtmlEdit({super.key});
@@ -13,7 +13,7 @@ class HtmlEdit extends StatefulWidget {
 }
 
 class _HtmlEditState extends State<HtmlEdit> {
-  HtmlEditorController controller = HtmlEditorController();
+  HtmlEditorController htmlController = HtmlEditorController();
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HtmlPageBloc, HtmlPageState>(
@@ -45,73 +45,54 @@ class _HtmlEditState extends State<HtmlEdit> {
       builder: (context, state) {
         if (state is HtmlPageSavedInProgress) {
           //Muestra un indicador de carga mientras se guarda el archivo
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         }
-        return Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: _clearHtmlFile,
-                      child: Row(
-                        children: const [
-                          Icon(Icons.file_copy),
-                          Text("Nuevo"),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: _loadHtmlFile,
-                      child: Row(
-                        children: const [
-                          Text("Mostrar HTML"),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: _saveHtmlFile,
-                      child: Row(
-                        children: const [
-                          Icon(Icons.save),
-                          Text("Guardar archivo"),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    CustomElevatedButton(
+                        text: "Nuevo",
+                        iconData: Icons.file_copy,
+                        onPressed: _clearHtmlFile),
+                    CustomElevatedButton(
+                        iconData: Icons.raw_on,
+                        onPressed: _showContentAsRawHtml),
+                    CustomElevatedButton(
+                        iconData: Icons.save, onPressed: _saveHtmlFile),
+                    CustomElevatedButton(
+                        iconData: Icons.html, onPressed: _loadHtmlFile)
+                  ],
+                ),
               ),
-            ),
-            HtmlEditor(
-              controller: controller,
-              htmlEditorOptions: const HtmlEditorOptions(
-                hint: "Ingrese texto: ",
+              HtmlEditor(
+                controller: htmlController,
+                htmlEditorOptions: const HtmlEditorOptions(
+                  hint: "Ingrese texto para luego guardarlo como .Html ",
+                ),
+                callbacks: Callbacks(onChangeContent: (String? value) {
+                  BlocProvider.of<HtmlPageBloc>(context).htmlContent = value;
+                }),
+                otherOptions: const OtherOptions(
+                  height: 400,
+                ),
               ),
-              otherOptions: const OtherOptions(
-                height: 400,
-              ),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );
   }
 
-  ///Guarda archivo html editado en Assets, en caso de estar vacio mostrará un snackbar informando de esto.
+  ///Guarda archivo html editado en carpeta de app, en caso de estar vacio mostrará un snackbar informando de esto.
   void _saveHtmlFile() async {
-    final htmlContent = await controller.getText();
-
+    final htmlContent = await htmlController.getText();
     if (kIsWeb) {
+      //se comenta mientras, ya que el import dart:html tira errores en plataformas no web||
       // var blob = html.Blob([htmlContent], 'text/plain', 'native');
 
       // var anchorElement = html.AnchorElement(
@@ -120,15 +101,26 @@ class _HtmlEditState extends State<HtmlEdit> {
       //   ..setAttribute("download", "${DateTime.now()}.txt")
       //   ..click();
     } else {
-      //Path Provider no soporta web
-      BlocProvider.of<HtmlPageBloc>(context)
-          .add(SavedHtmlFile(htmlText: htmlContent));
+      BlocProvider.of<HtmlPageBloc>(context).add(
+        SavedHtmlFile(htmlText: htmlContent),
+      );
     }
   }
 
-  ///Carga html en Assets
+  ///Carga html actual en vista de preview
   void _loadHtmlFile() {
-    controller.toggleCodeView();
+    //como html se guarda en bloc, hace setstate para actualizar vista de preview
+    setState(() {});
+  }
+
+  ///Borra contenido de html actual
+  void _clearHtmlFile() {
+    htmlController.clear();
+  }
+
+  ///Muestra texto como su equivalente en HTML
+  void _showContentAsRawHtml() {
+    htmlController.toggleCodeView();
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text(
@@ -137,24 +129,5 @@ class _HtmlEditState extends State<HtmlEdit> {
         duration: Duration(seconds: 2),
       ),
     );
-  }
-
-  ///Borra contenido de html actual
-  void _clearHtmlFile() {
-    controller.clear();
-  }
-
-  Future<int> readCounter() async {
-    try {
-      final file = await PathServices().localFile;
-
-      // Read the file
-      final contents = await file.readAsString();
-
-      return int.parse(contents);
-    } catch (e) {
-      // If encountering an error, return 0
-      return 0;
-    }
   }
 }
