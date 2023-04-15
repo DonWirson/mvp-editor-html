@@ -4,6 +4,7 @@ import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:prueba_html/bloc/html_page/bloc/html_page_bloc.dart';
 import 'package:prueba_html/widgets/custom_elevated_button.dart';
+// import 'dart:html' as html;
 
 class HtmlEdit extends StatefulWidget {
   const HtmlEdit({super.key});
@@ -45,7 +46,9 @@ class _HtmlEditState extends State<HtmlEdit> {
       builder: (context, state) {
         if (state is HtmlPageSavedInProgress) {
           //Muestra un indicador de carga mientras se guarda el archivo
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         }
         return SingleChildScrollView(
           child: Column(

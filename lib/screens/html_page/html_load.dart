@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_file_plus/open_file_plus.dart';
@@ -19,7 +20,7 @@ class _HtmlLoadState extends State<HtmlLoad> {
   void initState() {
     super.initState();
     //Gatilla evento que va a buscar paginas Html Guardadas de forma local
-    if (Platform.isAndroid) {
+    if (!kIsWeb) {
       BlocProvider.of<HtmlPageBloc>(context).add(LoadedHtmlFiles());
     }
   }
@@ -29,13 +30,15 @@ class _HtmlLoadState extends State<HtmlLoad> {
     return BlocListener<HtmlPageBloc, HtmlPageState>(
       listener: (context, state) {
         if (state is LoadedPageSavedSuccessfully) {
-          //Limpia lista de Archivos Html, esto para evitar la duplicación.
-          archivosHtml.clear();
-          archivosHtml = state.htmlPagesSaved;
-          setState(() {});
+          if (!kIsWeb) {
+            //Limpia lista de Archivos Html, esto para evitar la duplicación.
+            archivosHtml.clear();
+            archivosHtml = state.htmlPagesSaved;
+            setState(() {});
+          }
         }
       },
-      child: archivosHtml.isEmpty
+      child: archivosHtml.isEmpty || !kIsWeb
           ? const Center(
               child: Text(
                   "Empieza guardando archivos HTML, aparecerán acá, solo para la versión movil"),

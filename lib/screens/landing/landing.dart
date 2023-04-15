@@ -10,31 +10,44 @@ class LandingPage extends StatefulWidget {
   State<LandingPage> createState() => _LandingPageState();
 }
 
-class _LandingPageState extends State<LandingPage> {
+class _LandingPageState extends State<LandingPage>
+    with SingleTickerProviderStateMixin {
   final pageController = PageController();
+  late TabController _tabController;
   int selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(vsync: this, length: 3);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            label: "Editar html",
+      bottomNavigationBar: TabBar(
+        controller: _tabController,
+        labelColor: Colors.black87,
+        unselectedLabelColor: Colors.grey,
+        dividerColor: Colors.black,
+        tabs: const [
+          Tab(
+            text: "Editar html",
             icon: Icon(Icons.edit_outlined),
           ),
-          BottomNavigationBarItem(
-            label: "Html en tiempo real",
+          Tab(
+            text: "Preview HTML",
             icon: Icon(Icons.html_outlined),
           ),
-          BottomNavigationBarItem(
-            label: "Abrir html",
+          Tab(
+            text: "Abrir html",
             icon: Icon(Icons.file_open_outlined),
           ),
         ],
-        currentIndex: selectedIndex,
-        onTap: (value) => setState(() {
+        onTap: (value) {
           selectedIndex = value;
-        }),
+          setState(() {});
+        },
       ),
       appBar: AppBar(
         title: const Text("Módulo de prueba Html"),
