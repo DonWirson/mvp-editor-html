@@ -4,7 +4,7 @@ import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:prueba_html/bloc/html_page/bloc/html_page_bloc.dart';
 import 'package:prueba_html/widgets/custom_elevated_button.dart';
-// import 'dart:html' as html;
+import 'dart:html' as html;
 
 class HtmlEdit extends StatefulWidget {
   const HtmlEdit({super.key});
@@ -96,13 +96,13 @@ class _HtmlEditState extends State<HtmlEdit> {
     final htmlContent = await htmlController.getText();
     if (kIsWeb) {
       //se comenta mientras, ya que el import dart:html tira errores en plataformas no web||
-      // var blob = html.Blob([htmlContent], 'text/plain', 'native');
+      var blob = html.Blob([htmlContent], 'text/plain', 'native');
 
-      // var anchorElement = html.AnchorElement(
-      //   href: html.Url.createObjectUrlFromBlob(blob).toString(),
-      // )
-      //   ..setAttribute("download", "${DateTime.now()}.txt")
-      //   ..click();
+      var anchorElement = html.AnchorElement(
+        href: html.Url.createObjectUrlFromBlob(blob).toString(),
+      )
+        ..setAttribute("download", "${DateTime.now()}.html")
+        ..click();
     } else {
       BlocProvider.of<HtmlPageBloc>(context).add(
         SavedHtmlFile(htmlText: htmlContent),
@@ -113,7 +113,6 @@ class _HtmlEditState extends State<HtmlEdit> {
   ///Carga html actual en vista de preview
   void _loadHtmlFile() {
     BlocProvider.of<HtmlPageBloc>(context).add(RequestedHtmlPreview());
-  
   }
 
   ///Borra contenido de html actual
