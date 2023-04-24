@@ -17,9 +17,15 @@ class _HtmlPreviewState extends State<HtmlPreview> {
 
   @override
   Widget build(BuildContext context) {
-    var bloc = BlocProvider.of<HtmlPageBloc>(context);
-    return Html(
-      data: bloc.htmlContent,
-    );
+    var pageBloc = BlocProvider.of<HtmlPageBloc>(context);
+    return pageBloc.htmlContent != null || pageBloc.htmlContent!.isEmpty
+        ? Center(
+            child: Text(
+                "Inicia escribiendo algo en la primera vista, luego vuelve :D",
+                style: Theme.of(context).textTheme.bodyMedium),
+          )
+        : Html(
+            data: pageBloc.htmlContent,
+          );
   }
 }
