@@ -18,7 +18,7 @@ class _HtmlPreviewState extends State<HtmlPreview> {
   @override
   Widget build(BuildContext context) {
     var pageBloc = BlocProvider.of<HtmlPageBloc>(context);
-    return pageBloc.htmlContent != null || pageBloc.htmlContent!.isEmpty
+    return pageBloc.htmlContent!.isEmpty
         ? Center(
             child: Text(
                 "Inicia escribiendo algo en la primera vista, luego vuelve :D",
