@@ -54,10 +54,12 @@ class _LandingPageState extends State<LandingPage>
       ),
       body: IndexedStack(
         index: selectedIndex,
-        children: const [
-          HtmlEdit(),
-          HtmlPreview(),
-          HtmlLoad(),
+        children: [
+          const HtmlEdit(),
+          HtmlPreview(
+            key: UniqueKey(),
+          ),
+          const HtmlLoad(),
         ],
       ),
     );
