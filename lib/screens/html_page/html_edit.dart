@@ -66,8 +66,6 @@ class _HtmlEditState extends State<HtmlEdit> {
                         iconData: Icons.raw_on,
                         onPressed: _showContentAsRawHtml),
                     CustomElevatedButton(
-                        iconData: Icons.html, onPressed: _loadHtmlFile),
-                    CustomElevatedButton(
                         iconData: Icons.save, onPressed: _saveHtmlFile),
                   ],
                 ),
@@ -110,7 +108,7 @@ class _HtmlEditState extends State<HtmlEdit> {
     }
   }
 
-  ///Carga html actual en vista de preview
+  ///Carga html actual en vista de preview, en desuso
   void _loadHtmlFile() {
     BlocProvider.of<HtmlPageBloc>(context).add(RequestedHtmlPreview());
   }
