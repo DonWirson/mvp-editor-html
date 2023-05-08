@@ -4,7 +4,7 @@ Aplicación posee 3 vistas las cuales ayudan a generar y revisar Html Generado p
 
 Vista 1: Editor de HTMl.
 
-Vista 2: Visor on demand de Html.
+Vista 2: Visor en tiempo real de Html.
 
 Vista 3: Solo movil, permite seleccionar un archivo HTML generado y abrirlo.
 
